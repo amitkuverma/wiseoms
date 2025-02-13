@@ -1,0 +1,8 @@
+#dropzone {
+    transition: all 0.3s ease;
+  }
+  
+  #dropzone.dragging {
+    border-color: #6366f1;
+    background-color: #1e293b;
+  }

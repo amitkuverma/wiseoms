@@ -1,0 +1,68 @@
+<div class="flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-900 px-6 py-12">
+    <div class="w-full max-w-md space-y-8 bg-gray-800 p-8 rounded-xl shadow-md">
+      <!-- Logo Section -->
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-white">WiseOMS</h1>
+        <h2 class="mt-6 text-2xl font-bold tracking-tight text-indigo-600">Create an account</h2>
+        <p class="mt-2 text-sm text-white">
+          Join us and start your journey today!
+        </p>
+      </div>
+  
+      <!-- Form Section -->
+      <form class="mt-8 space-y-6" action="#" method="POST">
+        <div class="space-y-4">
+          <!-- Full Name Input -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-white">Full Name</label>
+            <div class="mt-1">
+              <input type="text" name="name" id="name" autocomplete="name" required
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500">
+            </div>
+          </div>
+  
+          <!-- Email Input -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-white">Email address</label>
+            <div class="mt-1">
+              <input type="email" name="email" id="email" autocomplete="email" required
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500">
+            </div>
+          </div>
+  
+          <!-- Password Input -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-white">Password</label>
+            <div class="mt-1">
+              <input type="password" name="password" id="password" autocomplete="new-password" required
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500">
+            </div>
+          </div>
+  
+          <!-- Confirm Password Input -->
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium text-white">Confirm Password</label>
+            <div class="mt-1">
+              <input type="password" name="confirm-password" id="confirm-password" required
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500">
+            </div>
+          </div>
+        </div>
+  
+        <!-- Register Button -->
+        <div>
+          <button type="submit"
+            class="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Register
+          </button>
+        </div>
+      </form>
+  
+      <!-- Footer Section -->
+      <p class="mt-6 text-center text-sm text-gray-500">
+        Already have an account? 
+        <a routerLink="/login" class="font-semibold text-indigo-600 hover:text-indigo-500">Sign in</a>
+      </p>
+    </div>
+  </div>
+  
