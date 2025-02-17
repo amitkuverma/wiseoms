@@ -13,6 +13,9 @@ import { OcrService } from '../../../services/ocr.service';
 export class UploadComponent {
   selectedFile: File | null = null;
   extractedText: string = '';
+  extractedLines: string[] = [];
+  uploadedFiles: File[] = [];
+  isUploading: boolean = false;
 
   constructor(private ocrService: OcrService) {}
 
@@ -23,21 +26,18 @@ export class UploadComponent {
       console.error('No file selected');
     }
   }
-  uploadedFiles: File[] = [];
 
   // Handle drag over event
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
+  onDragOver(event: DragEvent): void {
+    event.preventDefault(); // Prevent default to allow dropping
     event.stopPropagation();
   }
 
-  // Handle file drop event
-  onDrop(event: DragEvent) {
+  onDrop(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    const files = event.dataTransfer?.files;
-    if (files) {
-      this.handleFileSelection(files);
+    if (event.dataTransfer?.files?.length) {
+      this.selectedFile = event.dataTransfer.files[0]; // Allow only the first dropped file
     }
   }
 
@@ -54,33 +54,27 @@ export class UploadComponent {
     this.selectedFile = event.target.files[0];
   }
 
-  // async onUpload() {
-  //   if (!this.selectedFile) return;
-
-  //   const formData = new FormData();
-  //   formData.append('file', this.selectedFile);
-
-  //   try {
-  //     const response = await axios.post('http://localhost:5000/api/ocr/extract', formData);
-  //     this.extractedText = response.data.extractedText;
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error);
-  //   }
-  // }
-
   onUpload() {
     console.log('Uploading file:', this.selectedFile);
     if (!this.selectedFile) return;
-
+    this.isUploading = true;
     if (this.selectedFile) {
       this.ocrService.extractText(this.selectedFile).subscribe(
         (response) => {
-          this.extractedText = response.text;
+          this.extractedText = response;
+          this.processExtractedText(response.extractedText);
+          this.isUploading = false;
         },
         (error) => {
           console.error('OCR Extraction Error:', error);
         }
       );
+    }
+  }
+
+  processExtractedText(text: string) {
+    if (text) {
+      this.extractedLines = text.split('\n').filter(line => line.trim() !== '');
     }
   }
 

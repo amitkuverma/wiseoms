@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class OcrService {
-  private apiUrl = 'http://localhost:5000/api/ocr/extract';
+  private apiUrl = 'http://88.222.212.197/ocr/api/ocr/extract';
 
   constructor(private http: HttpClient) {}
 

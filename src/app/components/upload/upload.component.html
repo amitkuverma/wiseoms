@@ -9,51 +9,96 @@
 
     <!-- File Upload Section -->
     <div class="mt-8">
-      <h2 class="text-base font-semibold">File Assets</h2>
-      <div id="dropzone"
-        class="mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-600 bg-gray-800 px-6 py-8 transition hover:border-indigo-500"
-        (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-        <svg class="h-12 w-12 text-gray-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd"
-            d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
-            clip-rule="evenodd" />
-        </svg>
-        <div class="mt-4 flex flex-col items-center">
-          <label for="file-upload"
-            class="relative cursor-pointer rounded-md font-semibold text-indigo-500 hover:text-indigo-300 focus:outline-none">
-            <span>Drag and drop your files here to upload</span>
-            <input id="file-upload" type="file" class="sr-only" (change)="onFileSelected($event)">
-          </label>
-          <p class="mt-1 text-xs text-gray-400">50 Mb max file size</p>
-        </div>
-        <!-- File List Display -->
-        <div id="file-list" class="mt-4 text-sm text-gray-300">
-          <ul>
-            <li *ngFor="let file of uploadedFiles">{{ file.name }}</li>
-          </ul>
+      <h2 class="text-base font-semibold pb-3">File Assets</h2>
+      <div class="bg-gray-500 p-3 rounded-lg border border-gray-400">
+        <p class="mt-1 text-sm">Upload files from your computer.</p>
+        <p class="mt-1 text-sm text-indigo-400">Supported file formats</p>
+        <div id="dropzone"
+          class="mt-4 flex flex-col items-center justify-center rounded-lg border border-gray-600 bg-gray-700 px-6 py-8 transition hover:border-indigo-500"
+          (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+          <svg class="h-12 w-12 text-gray-400" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
+              clip-rule="evenodd" />
+          </svg>
+          <div class="mt-4 flex flex-col items-center">
+            <label for="file-upload"
+              class="relative cursor-pointer rounded-md font-semibold text-indigo-500 hover:text-indigo-300 focus:outline-none">
+              <span>Drag and drop your file here to upload</span>
+              <input id="file-upload" type="file" class="sr-only" (change)="onFileSelected($event)"
+                accept="application/pdf, image/*, .doc, .docx">
+            </label>
+            <p class="mt-1 text-xs text-gray-400">50 Mb max file size</p>
+          </div>
+
+          <!-- Loader Spinner -->
+          <div *ngIf="isUploading" class="mt-4 text-center text-indigo-500">
+            <svg class="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+              <path fill="currentColor" d="M4 12c0-4.418 3.582-8 8-8s8 3.582 8 8" opacity=".25"></path>
+            </svg>
+            <p class="mt-2 text-sm">Uploading...</p>
+          </div>
+
+          <!-- File List Display -->
+          <div id="file-list" class="mt-4 text-sm text-gray-300">
+            <ul>
+              <li *ngIf="selectedFile">{{ selectedFile.name }}</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Custom POST NOTE Section -->
     <div class="mt-8">
-      <h2 class="text-base font-semibold">Custom POST NOTE</h2>
-      <div class="mt-4 rounded-lg border border-gray-600 bg-gray-800 px-4 py-4">
-        <textarea
-          class="w-full p-3 border rounded text-sm text-gray-300 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows="6"
-          placeholder="Ex: create a note including the patient's name, date of payment, insurance, check no..."></textarea>
-      </div>
+      <h2 class="text-base font-semibold pb-3">Custom POST NOTE</h2>
+      <textarea
+        class="w-full p-3 border rounded text-sm text-gray-300 bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        rows="4"
+        placeholder="Ex: create a note including the patient's name, date of payment, insurance, check no..."></textarea>
     </div>
 
     <!-- Submit Button -->
     <div class="mt-8">
       <button type="button"
-        class="w-full rounded-full bg-gray-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400" (click)="onUpload()">
+        class="w-full rounded-full bg-gray-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-gray-400"
+        (click)="onUpload()">
         Submit
       </button>
     </div>
   </div>
+
+
+
+  <div class="p-6 max-w-4xl mx-auto">
+    <div *ngIf="extractedLines.length" class="mt-6">
+      <h3 class="text-lg font-semibold text-gray-300 mb-4">OCR Extracted Text</h3>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+          <thead class="bg-gray-100 border-b">
+            <tr>
+              <th class="py-2 px-4 text-left border-r">#</th>
+              <th class="py-2 px-4 text-left">Extracted Line</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of extractedLines; let i = index" class="border-b hover:bg-gray-50">
+              <td class="py-2 px-4 border-r">{{ i + 1 }}</td>
+              <td class="py-2 px-4">{{ line }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 class="mt-6 text-lg font-semibold text-gray-800">Raw JSON Response</h4>
+      <pre
+        class="p-4 bg-gray-100 border rounded-md text-sm text-gray-700 overflow-x-auto">{{ extractedText | json }}</pre>
+    </div>
+  </div>
+
 
   <!-- Footer -->
   <footer class="mt-8 text-center text-xs text-gray-500">
